@@ -1,0 +1,60 @@
+function [g1, T_order, T] = static_g1(y, x, params, sparse_rowval, sparse_colval, sparse_colptr, T_order, T)
+if nargin < 8
+    T_order = -1;
+    T = NaN(7, 1);
+end
+[T_order, T] = model_file.sparse.static_g1_tt(y, x, params, T_order, T);
+g1_v = NaN(47, 1);
+g1_v(1)=1-(1+y(3));
+g1_v(2)=(-(y(2)*y(8)*y(4)*(1-y(13))));
+g1_v(3)=1-T(1)*getPowerDeriv(y(2),1-params(6),1);
+g1_v(4)=(-(y(1)*y(8)*y(4)*(1-y(13))));
+g1_v(5)=(-y(1));
+g1_v(6)=1-(1-params(4));
+g1_v(7)=(-(1/params(9)*getPowerDeriv(1+y(3),params(7),1)));
+g1_v(8)=1-(1-params(27));
+g1_v(9)=(-(T(3)*(y(4)*T(3)>0)));
+g1_v(10)=(-(y(2)*y(1)*y(8)*(1-y(13))));
+g1_v(11)=(-(1000*(-(y(5)*y(15)))/((y(4)+1e-8)*(y(4)+1e-8))));
+g1_v(12)=1;
+g1_v(13)=(-(y(19)*y(14)*(-(params(22)*y(15)*(1-y(13))+T(6)))));
+g1_v(14)=(-(y(8)*T(6)));
+g1_v(15)=(-(1000*y(15)/(y(4)+1e-8)));
+g1_v(16)=(-((y(4)*T(3)>0)*y(4)*T(2)));
+g1_v(17)=1-(1-params(24));
+g1_v(18)=1-(1-params(25));
+g1_v(19)=(-params(37));
+g1_v(20)=(-((-params(21))*exp(y(7)*(-params(21)))));
+g1_v(21)=1;
+g1_v(22)=(-(y(2)*y(1)*y(4)*(1-y(13))));
+g1_v(23)=1-y(5)*T(6);
+g1_v(24)=(-(T(4)*getPowerDeriv(y(9),params(7),1)));
+g1_v(25)=(-1);
+g1_v(26)=1;
+g1_v(27)=1;
+g1_v(28)=1;
+g1_v(29)=(-(T(5)*params(10)*getPowerDeriv(y(12),params(8),1)));
+g1_v(30)=(-(y(19)*y(14)));
+g1_v(31)=(-(y(19)*y(14)*(-(y(5)*(T(7)-params(22)*y(15))))));
+g1_v(32)=1;
+g1_v(33)=(-(y(2)*y(1)*y(8)*(-y(4))));
+g1_v(34)=(-(y(8)*y(5)*T(7)));
+g1_v(35)=(-(y(19)*y(12)));
+g1_v(36)=(-(y(19)*(1-y(5)*(params(22)*y(15)*(1-y(13))+T(6)))));
+g1_v(37)=1;
+g1_v(38)=(-(y(19)*y(14)*(-(y(5)*params(22)*(1-y(13))))));
+g1_v(39)=1;
+g1_v(40)=(-(1000*y(5)/(y(4)+1e-8)));
+g1_v(41)=1;
+g1_v(42)=(-params(2));
+g1_v(43)=1;
+g1_v(44)=1;
+g1_v(45)=1-params(33);
+g1_v(46)=(-(y(12)*y(14)));
+g1_v(47)=(-(y(14)*(1-y(5)*(params(22)*y(15)*(1-y(13))+T(6)))));
+if ~isoctave && matlab_ver_less_than('9.8')
+    sparse_rowval = double(sparse_rowval);
+    sparse_colval = double(sparse_colval);
+end
+g1 = sparse(sparse_rowval, sparse_colval, g1_v, 19, 19);
+end

@@ -91,11 +91,11 @@ parameters
 
 /* Panel A: Climate Parameters */ 
 xi				= 3/11;
-gamma			= 2.379e-5;
+gamma			= 2.5e-5;
 theta2			= 2.6;
 deltapb			= 1-(1-0.017)^(1/4);
 delta_M			= 0;
-xi_T  			= 0.0023;
+xi_T  			= 0.0021;
 
 /* Panel B: Economics Parameters */ 
 LT				= 10.48;
@@ -107,12 +107,12 @@ sigmaH			= 0.73685;
 varphi 			= 0;
 delta_SIG 		= 0.0033;
 GS1				= 0;
-beta			= 0.995;
+beta			= 0.9852^0.25;
 
 /* Panel C: Initial Conditions */ 
-Y0				= 30/4;
-E0				= 20.30/4;
-THETA2020		= 0.109;
+Y0				= 110/4;
+E0				= 30.30/4;
+THETA2020		= 0.109/2;
 L0				= 4.85;
 M0				= 338*2.13-545;
 mu0				= 0.0001;
@@ -231,7 +231,7 @@ steady_state_model;
 	r 		= 1/beta;
 	T 		= xi_T*M;
 	tau_USD	= tau*THETA1/(SIG+1e-8)*1000;
-    welfare = Z*L*((1/(1-sigmaC))*c^(1-sigmaC) - chi/(1+sigmaH)*h^(1+sigmaH))/(1-beta);
+    welfare = Z^(1-sigmaC)*L*((1/(1-sigmaC))*c^(1-sigmaC) - chi/(1+sigmaH)*h^(1+sigmaH))/(1-beta);
 end;
 
 shocks;

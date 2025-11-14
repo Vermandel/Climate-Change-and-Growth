@@ -16,7 +16,8 @@ var
     i       ${i}$           (long_name='Investment'),
     lb_x    ${\lambda_{x}}$ (long_name='Shadow cost of pollution stock'),
     lb_y    ${\lambda_{y}}$ (long_name='Lagrange multiplier on resource constraint'),
-    a       ${A}$           (long_name='Total factor productivity (TFP)');
+    a       ${A}$           (long_name='Total factor productivity (TFP)'),
+	lnx lny lnc lne lni;
 
 varexo
     e_a   ${\varepsilon_{A}}$   (long_name='TFP innovation (shock to productivity)');
@@ -66,7 +67,7 @@ model;
 	lb_x = DUM_tax * lb_y * (d1 + 2*d2*x) / (1 - d2*x^2 - d1*x - d0) * y 
 		   + beta * (c(+1)/c)^(-phic) * (1 - deltaX) * lb_x(+1);    % Shadow cost of pollution (law of motion)
 	[name='FOC: mu']
-	mu^(theta2 - 1) = ( sigma / (theta1 * theta2) * lb_x * y^(-gamma) )^(1/1);       % Optimal abatement FOC
+	mu =  (( sigma / (theta1 * theta2) * lb_x * y^(-gamma) ))^(1/(theta2 - 1));       % Optimal abatement FOC
 	[name='resource allocation']
 	c = y - i - z;                                                   % Resource constraint: goods market clearing
 	[name='capital accumulation']
@@ -81,11 +82,18 @@ model;
 	y = (1 - d2*x^2 - d1*x - d0) * a * (k(-1))^alpha;                % Production function with climate damages
 	[name='TFP shock']
 	log(a) = rho_a * log(a(-1)) + e_a;                               % TFP process (AR(1))
+	
+	lnx = log(x/steady_state(x));
+	lny = log(y/steady_state(y));
+	lnc = log(c/steady_state(c));
+	lne = log(e/steady_state(e));
+	lni = log(i/steady_state(i));
 end;
 
 % ------------------------ %
 % Steady State Computation %
 % ------------------------ %
+
 
 steady_state_model;
 	a    = 1;
@@ -99,6 +107,7 @@ steady_state_model;
 	i    = k-(1-deltaK)*k;
 	z    = theta1*mu^theta2*y;
 	c    = y-i-z;
+	lnx = 0; lny = 0; lne = 0; lni = 0; 
 end;
 
 steady;
@@ -110,7 +119,7 @@ end;
 
 
 % Solve model: Optimal Carbon Price Policy
-stoch_simul(order=1,irf=30) y c i x e mu lb_x z a;
+stoch_simul(order=1,irf=30) lny lnc lni lnx lne mu lb_x;
 
 % linear solution method of the form
 % y(t) - yss = P*(y(t-1) - yss) + Q*epsilon(t)
@@ -121,7 +130,7 @@ yss1   = oo_.dr.ys;
 
 % Solve model: No carbon price
 set_param_value('DUM_tax',0);
-stoch_simul(order=1,irf=30) y c i x e mu lb_x z a;
+stoch_simul(order=1,irf=30) lny lnc lni lnx lne mu lb_x;
 
 % storing irfs: x(t) = y(t)-yss
 xt2    = oo_.irfs;
@@ -135,13 +144,9 @@ for ix=1:M_.exo_nbr
 	for iy=1:size(var_list_,1)
 		idx = strmatch(var_list_{iy},M_.endo_names,'exact');
 		subplot(nx,ny,iy)
-		if abs(yss2(idx)) < 1e-6
-			yss1(idx) = 1;  % no division by ss
-			yss2(idx) = 1;  % no division by ss
-		end
-		plot(100*eval(['irfs1.' var_list_{iy} '_' M_.exo_names{ix} ])/yss1(idx),'linewidth',2)
+		plot(100*eval(['xt1.' var_list_{iy} '_' M_.exo_names{ix} ]),'linewidth',2)
 		hold on;
-		plot(100*eval(['irfs2.' var_list_{iy} '_' M_.exo_names{ix} ])/yss2(idx),'linewidth',2)	
+		plot(100*eval(['xt2.' var_list_{iy} '_' M_.exo_names{ix} ]),'linewidth',2)	
 		hold off;
 		title(M_.endo_names_long{iy})
 		grid on;

@@ -1,4 +1,4 @@
-function [loss,filtered_shock_ts] = full_path_opt(x,filtered_shock_ts,update_path_dates,endo_nz0,oo_nz0,M_nz0,options_,idshock,idobj)
+function [loss,filtered_shock_ts] = full_path_opt(x,filtered_shock_ts,update_path_dates,endo_nz0,oo_nz0,M_nz0,options_,idshock,idobj,jump_time)
 %WELF_OPT Summary of this function goes here
 %   Detailed explanation goes here
 
@@ -11,10 +11,18 @@ function [loss,filtered_shock_ts] = full_path_opt(x,filtered_shock_ts,update_pat
     %    endo_nz0 = guessy;
     %end
     
-    theshock = filtered_shock_ts(update_path_dates).data(:,idshock);
+    %theshock = filtered_shock_ts(update_path_dates).data(:,idshock);
+	
+	% vector of time
+	tn = find(filtered_shock_ts.dates==update_path_dates(1)):find(filtered_shock_ts.dates==update_path_dates(end));
+	
+	% 
     theshock = x;
-    xunpacked=filtered_shock_ts.data;
-    xunpacked(find(filtered_shock_ts.dates==update_path_dates(1)):find(filtered_shock_ts.dates==update_path_dates(end)),idshock)=theshock;
+    if jump_time > 1
+		theshock = spline(tn(1:jump_time:end),theshock,tn);
+	end
+	xunpacked=filtered_shock_ts.data;
+    xunpacked(tn,idshock)=theshock;
     filtered_shock_ts = dseries(xunpacked,filtered_shock_ts.dates(1),filtered_shock_ts.name);
 
 

@@ -6,7 +6,6 @@ function [deterministic_simuls,err] = EP_deterministic_path(endo_path,exo_path,o
     else
         dates_vec = (dates_vec(1)+1):(dates_vec(end)-1);
     end
-  dates_vec
 
     %% solve initial path with no shocks
     % get options of simulations
@@ -35,10 +34,5 @@ function [deterministic_simuls,err] = EP_deterministic_path(endo_path,exo_path,o
     newpath = dseries(endo_simul',fulld_vec(1),M_.endo_names);
 
     %% merge into input path
-    % unpack input
-    %thedata=endo_path.data;
-    %thedata(find(endo_path.dates==newpath.dates(1)):find(endo_path.dates==newpath.dates(end)),:)=newpath.data;
-    % stack into dseries
-    %deterministic_simuls = dseries(thedata,endo_path.dates(1),M_.endo_names);
     deterministic_simuls = ds_leftmerge(endo_path,newpath);
 end

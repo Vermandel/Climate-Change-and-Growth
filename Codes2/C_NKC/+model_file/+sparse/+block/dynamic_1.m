@@ -1,0 +1,25 @@
+function [y, T] = dynamic_1(y, x, params, steady_state, sparse_rowval, sparse_colval, sparse_colptr, T)
+  y(82)=(1-params(59))*y(20)+params(59)*(steady_state(20));
+  y(65)=y(3)*(1-params(4));
+  T(1)=params(3)^params(6);
+  y(64)=y(2)^(1-params(6))*T(1);
+  y(66)=y(64)/y(2)-1;
+  y(68)=y(6)*(1-params(41));
+  y(70)=y(8)*(1-params(35));
+  y(86)=1-params(46)+params(46)*y(24)+x(1);
+  y(85)=1-params(47)+params(47)*y(23)+x(2);
+  y(87)=1-params(48)+params(48)*y(25)+x(4);
+  y(84)=1-params(51)+params(51)*y(22)+x(3);
+  y(96)=params(24)+params(56)*x(5);
+  y(88)=(y(87)*(params(24)+params(56)*x(5)))^(1/(params(33)-1));
+  y(124)=x(5);
+  y(67)=y(5)*(1-y(6));
+  y(63)=y(1)*(1+y(3));
+  y(69)=max(y(67)*params(34)/1000/params(33)*y(70),0);
+  T(2)=(params(24)+params(56)*x(5))^(1/(params(33)-1));
+  T(3)=params(33)+T(2)*(1-params(33));
+  y(118)=y(69)*params(54)*(params(24)+params(56)*x(5))*T(3)*100/params(66);
+  T(4)=y(88)^params(33);
+  y(92)=y(69)*params(54)*100*T(4);
+  y(93)=1000*y(69)*params(54)*y(96)/(y(67)+1e-8);
+end

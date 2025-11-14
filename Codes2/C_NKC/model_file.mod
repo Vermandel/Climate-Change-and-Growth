@@ -7,7 +7,7 @@
 close all;
 
 @#ifndef SIMULATIONS
-	@#define SIMULATIONS = 0
+	@#define SIMULATIONS = 1
 @#endif
 
 %----------------------------------------------------------------

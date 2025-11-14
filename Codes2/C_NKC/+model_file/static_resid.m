@@ -1,0 +1,85 @@
+function residual = static_resid(T, y, x, params, T_flag)
+% function residual = static_resid(T, y, x, params, T_flag)
+%
+% File created by Dynare Preprocessor from .mod file
+%
+% Inputs:
+%   T         [#temp variables by 1]  double   vector of temporary terms to be filled by function
+%   y         [M_.endo_nbr by 1]      double   vector of endogenous variables in declaration order
+%   x         [M_.exo_nbr by 1]       double   vector of exogenous variables in declaration order
+%   params    [M_.param_nbr by 1]     double   vector of parameter values in declaration order
+%                                              to evaluate the model
+%   T_flag    boolean                 boolean  flag saying whether or not to calculate temporary terms
+%
+% Output:
+%   residual
+%
+
+if T_flag
+    T = model_file.static_resid_tt(T, y, x, params);
+end
+residual = zeros(62, 1);
+    residual(1) = (y(20)) - (y(20)*(1-params(59))+params(59)*(y(20)));
+    residual(2) = (y(1)) - (y(1)*(1+y(3)));
+    residual(3) = (y(3)) - (y(3)*(1-params(4)));
+    residual(4) = (y(2)) - (y(2)^(1-params(6))*T(1));
+residual(5) = y(4);
+    residual(6) = (y(5)) - (y(5)*(1-y(6)));
+    residual(7) = (y(6)) - (y(6)*(1-params(41)));
+    residual(8) = (y(7)) - (max(y(5)*T(3),0));
+    residual(9) = (y(8)) - (y(8)*(1-params(35)));
+    residual(10) = (y(24)) - (1-params(46)+y(24)*params(46)+x(1));
+    residual(11) = (y(23)) - (1-params(47)+y(23)*params(47)+x(2));
+    residual(12) = (y(25)) - (1-params(48)+y(25)*params(48)+x(4));
+    residual(13) = (y(22)) - (1-params(51)+y(22)*params(51)+x(3));
+    residual(14) = (T(6)) - (params(11)*((1-params(18))*T(6)+T(7))*(1+y(12))/(1+y(11)));
+    residual(15) = (y(14)) - (1-T(8)-T(10)-params(55)*(1-y(23)*y(16)));
+    residual(16) = ((1+y(11))*(y(11)-y(20))) - ((1-params(17))/params(15)+y(16)*y(23)*params(17)/params(15)+(1+y(11))*T(12));
+    residual(17) = (y(15)-params(36)) - ((y(15)-params(36))*(1-params(37))+y(25)*y(2)*y(1)*y(13)*y(5)*params(2)*(1-T(14)));
+    residual(18) = (y(16)) - (T(21)+y(7)*params(54)*(params(24)+params(56)*x(5))*(params(33)+T(14)*(1-params(33))));
+    residual(19) = (T(22)) - (y(22)*T(23)*T(27)*T(28)*params(67));
+    residual(20) = (y(21)) - (T(19)*params(19)*(y(14))*(y(13))+T(29)*(1e-8+y(25)*y(5)*(1-T(14))));
+    residual(21) = (y(9)) - (log((1+y(3))*(1+y(4))));
+    residual(22) = (y(10)) - (log(T(30))-log(1e-8+y(25)*y(2)*y(1)*T(32)));
+    residual(23) = ((y(16))) - (y(7)*params(54)*(params(24)+params(56)*x(5))*(params(33)+T(14)*(1-params(33)))+T(36)/T(20));
+    residual(24) = (y(18)) - (1-T(10)-params(55)*(1-(y(16))));
+    residual(25) = (T(37)) - ((1+y(19))*params(11)*(T(7)+(1-params(18))*T(37)));
+    residual(26) = (y(29)) - (100*(T(8)+params(55)*(1-y(23)*y(16))));
+    residual(27) = (y(49)) - (100*log(y(27)/params(31)));
+    residual(28) = (y(30)) - (y(7)*params(54)*100*T(38));
+    residual(29) = (y(36)) - ((1+y(12))/(1+y(11))-1);
+    residual(30) = (y(31)) - (1000*y(7)*params(54)*y(34)/(y(5)+1e-8));
+    residual(31) = (y(37)) - (y(11)*100);
+    residual(32) = (y(38)) - (y(12)*100);
+    residual(33) = (y(50)) - (y(19)*100);
+    residual(34) = (y(39)) - (100*y(36));
+    residual(35) = (y(41)) - (100*log(y(17)/params(31)));
+    residual(36) = (y(34)) - (params(24)+params(56)*x(5));
+    residual(37) = (y(13)) - (y(33)*T(39));
+    residual(38) = (y(33)) - (T(19));
+    residual(39) = (y(26)) - ((y(25)*(params(24)+params(56)*x(5)))^T(13));
+    residual(40) = (y(35)) - (y(25)*y(2)*y(1)*y(13)*y(5)*(1-y(26)));
+    residual(41) = (y(14)*y(13)) - (y(27));
+    residual(42) = (y(17)*y(18)) - (y(43));
+    residual(43) = (y(45)) - (y(2)*y(24)*T(40)*T(43)+y(2)*T(40)*T(44)+params(11)*y(45));
+    residual(44) = (y(46)) - (y(2)*T(40)*T(48)+params(11)*y(46));
+    residual(45) = (y(53)) - (100*(y(16)-params(66))/params(66));
+    residual(46) = (y(54)) - (100*(T(51)-params(66))/params(66));
+    residual(47) = (y(56)) - (y(7)*params(54)*(params(24)+params(56)*x(5))*(params(33)+T(14)*(1-params(33)))*100/params(66));
+    residual(48) = (y(55)) - (100*(T(21)-T(51))/params(66));
+    residual(49) = (y(44)) - (T(16)*T(53));
+    residual(50) = (y(57)) - (y(61)+y(58)+y(59)+y(60));
+    residual(51) = (y(59)) - (y(55)*(params(17)-1)/params(15)+y(59)*(1+y(3))*params(11)*(1-params(55)));
+    residual(52) = (y(58)) - ((y(11)-y(20))*100-y(61)-y(59)-y(60));
+    residual(53) = (y(60)) - (y(56)*(params(17)-1)/params(15)+y(60)*(1+y(3))*params(11)*(1-params(55)));
+    residual(54) = (y(61)) - (100*(params(17)-1)/params(15)*(y(23)*y(16)-y(16))/params(66)+y(61)*(1+y(3))*params(11)*(1-params(55)));
+    residual(55) = (y(52)) - (100*log(y(27)/(y(27))));
+    residual(56) = (y(51)) - (100*log(y(13)/params(31)));
+    residual(57) = (y(40)) - (100*log(y(13)/y(17)));
+    residual(58) = (y(28)) - (y(24)*T(54));
+    residual(59) = (y(42)) - ((y(43)/(1-params(18))-T(4))^(-params(9)));
+    residual(60) = (y(47)) - (params(11)*(y(47)*T(55)+T(57)*T(59)*T(60)));
+    residual(61) = (y(48)) - (params(11)*(T(55)*y(48)+T(47)*T(57)*T(61)));
+    residual(62) = (y(62)) - (x(5));
+
+end

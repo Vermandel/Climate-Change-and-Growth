@@ -33,20 +33,22 @@ function [endo_simul,oo_,M_,yT,y0] = EP_paths_init(oo_,M_,options_,exo_filtered_
         init_date = exo_filtered_ts.dates(1)-options_.ep.Tdrop;
         simsize   = Tsimsize + options_.ep.Tdrop;
     end
-
+    
 
     % get terminal state 
     [oo_.steady_state, M_.params] = eval([ M_.fname  '.steadystate(oo_.steady_state, final_exo, M_.params)']);
     y0 = oo_.steady_state;
     yT = oo_.steady_state;
-    
+
+
     % get initial state if function exists
     if exist(['+' M_.fname '/histval']) > 0
 	    % setting initial state
 	   y0   	= feval([M_.fname '.histval'], oo_, M_);
     end
 
-
+    % remove useless initialization of nonstate in t=0
+    %y0(find(M_.lead_lag_incidence(1,:)==0)) = nan;
 
     % set initial path
     endo_simul = repmat(y0, [1,Tsimsize]);

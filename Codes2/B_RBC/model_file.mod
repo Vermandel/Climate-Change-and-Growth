@@ -35,6 +35,7 @@ var Z   		${Z}$ (long_name='TFP'),
 	E  			${E_t}$ (long_name='Emissions (GtCO2)'),
 	T  			${T_t}$ (long_name='Temperatures'),
 	tau_USD		${\tau_t}$ (long_name='Carbon tax (\$/C)'),
+    welfare		${welf_t}$ (long_name='Welfare'),
 	s_a 		${\epsilon^A}$ (long_name='Productivity shock');
 
 
@@ -172,7 +173,8 @@ model;
 	d = exp(-gamma*(M(-1)));
 	[name='Tax in USD']	
 	tau_USD		= tau*THETA1/(SIG+1e-8)*1000;
-
+	[name='Welfare']	
+    welfare = L(-1)*Z(-1)^(1-sigmaC)*((1/(1-sigmaC))*c^(1-sigmaC) - chi/(1+sigmaH)*h^(1+sigmaH)) + beta*welfare(+1);
 end;
 
 
@@ -229,6 +231,7 @@ steady_state_model;
 	r 		= 1/beta;
 	T 		= xi_T*M;
 	tau_USD	= tau*THETA1/(SIG+1e-8)*1000;
+    welfare = Z*L*((1/(1-sigmaC))*c^(1-sigmaC) - chi/(1+sigmaH)*h^(1+sigmaH))/(1-beta);
 end;
 
 shocks;
